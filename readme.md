@@ -5,7 +5,7 @@
 
 * Clone the repo
 ```sh
-git clone https://github.com/Tacomies/brainfuck/edit/master/readme.md
+git clone https://github.com/Tacomies/brainfuck/
 ```
 
 * Using CMake
