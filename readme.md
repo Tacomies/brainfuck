@@ -11,7 +11,7 @@
 git clone https://github.com/Tacomies/brainfuck/
 ```
 
-* Using CMake and Make
+* Using [CMake](https://cmake.org/download/) and [Make](https://www.gnu.org/software/make/)
 
 ```sh
 mkdir build
