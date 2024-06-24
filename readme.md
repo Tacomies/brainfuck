@@ -1,6 +1,9 @@
 # BFC v1.0.0
 * Brainfuck compiler
 
+## How it works
+<img src="how-it-works.png"/>
+
 ## Building
 
 * Clone the repo
