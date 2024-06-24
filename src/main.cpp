@@ -14,9 +14,7 @@ int main(int argc, char** argv)
 {
 	std::string source_path;
 	
-	std::cout << argc;
-
-	if (argc == 0)
+	if (argc == 1)
 	{
 		help();
 		return 0;
