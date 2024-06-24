@@ -20,9 +20,9 @@ make
 * Manually
 
 ```sh
-gcc -c src/loader.cpp
-gcc -c src/transpiler.cpp
-gcc -o bfc src/main.cpp loader.o transpiler.o
+g++ -c src/loader.cpp
+g++ -c src/transpiler.cpp
+g++ -o bfc src/main.cpp loader.o transpiler.o
 rm loader.o transpiler.o 
 ```
 
