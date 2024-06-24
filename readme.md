@@ -8,13 +8,22 @@
 git clone https://github.com/Tacomies/brainfuck/
 ```
 
-* Using CMake
+* Using CMake and Make
 
 ```sh
 mkdir build
 cd build
 cmake ..
 make
+```
+
+* Manually
+
+```sh
+gcc -c src/loader.cpp
+gcc -c src/transpiler.cpp
+gcc -o bfc src/main.cpp loader.o transpiler.o
+rm loader.o transpiler.o 
 ```
 
 ## Usage
