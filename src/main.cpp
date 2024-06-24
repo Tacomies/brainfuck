@@ -43,7 +43,7 @@ int main(int argc, char** argv)
 	gcc_command += "echo '";
 	gcc_command += transpiled_code;
 	gcc_command += "'";
-	gcc_command += "| gcc -xc -o ";
+	gcc_command += " | gcc -xc -o ";
 	gcc_command += destination + " - ";
 	
 	std::system(gcc_command.c_str());
