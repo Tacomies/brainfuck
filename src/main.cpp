@@ -3,6 +3,7 @@
 #include <string>
 #include "../include/loader.hpp"
 #include "../include/transpiler.hpp"
+#include "../include/output.hpp"
 
 
 void help()
@@ -38,16 +39,8 @@ int main(int argc, char** argv)
 		return 1;
 	}
 
-	std::string gcc_command;
+	output_code(transpiled_code, destination);
 	
-	gcc_command += "echo '";
-	gcc_command += transpiled_code;
-	gcc_command += "'";
-	gcc_command += " | gcc -xc -o ";
-	gcc_command += destination + " - ";
-	
-	std::system(gcc_command.c_str());
-
 	return 0;
 }
 
