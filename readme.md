@@ -12,8 +12,8 @@ git clone https://github.com/Tacomies/brainfuck/
 
 ```sh
 mkdir build
-cd build
-cmake ..
+cd build 
+cmake .. (On Windows add: -G "Unix Makefiles")
 make
 ```
 
