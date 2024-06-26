@@ -35,32 +35,34 @@ int match_loop(std::vector<char> source_code, int pointer)
 std::string build_stacking_instruction(std::vector<char> source_code, int *pointer, int end)
 {
 	std::string instruction;
-	int repeats = 0;
+	int repeat_tracker = 0;
+	std::string repeats;
 	char instruction_type = source_code.at(*pointer);
 	
 	while (*pointer < end && source_code.at(*pointer) == instruction_type)
 	{
-		repeats++;
+		repeat_tracker++;
 		(*pointer)++;
 	}
-	
+
+	repeats = std::to_string(repeat_tracker);
+
 	switch(instruction_type)
 	{
 		case POINTER_INCREMENT:
-			instruction += "data_pointer += ";
+			instruction += "pointer_increment(" + repeats + ");\n";
 			break;
 		case POINTER_DECREMENT:
-			instruction += "data_pointer -= ";
+			instruction += "pointer_decrement(" + repeats + ");\n";
 			break;
 		case BYTE_INCREMENT:
-			instruction += "data_array[data_pointer] += ";
+			instruction += "data_array[data_pointer] += " + repeats + ";\n";
 			break;
 		case BYTE_DECREMENT:
-			instruction += "data_array[data_pointer] -= ";
+			instruction += "data_array[data_pointer] -= " + repeats + ";\n";
 			break;
 	}
 
-	instruction += std::to_string(repeats) + ";\n";
 
 	return instruction;
 }
@@ -85,7 +87,7 @@ std::string recursive_transpile(std::vector<char> source_code, int pointer, int 
 		
 		if (source_code.at(pointer) == INPUT_BYTE)
 		{
-			transpiled_code += "scanf(\"%\" SCNd8, &data_array[data_pointer]);\n";
+			transpiled_code += "input_byte();\n";
 			pointer++;
 			continue;
 		}
@@ -103,16 +105,29 @@ std::string recursive_transpile(std::vector<char> source_code, int pointer, int 
 	return transpiled_code;
 }
 
-std::string include_boilerplate(std::string transpiled_code)
+void add_boilerplate(std::string* code)
+{
+	// This code can be found in extra/boilerplate.c
+	// I decided to use the code this way so that setting
+	// env variables to locate the file during transpiling
+	// wouldn't be necessary for the user
+	*code += "#include <stdio.h>\n#include <stdint.h>\nuint8_t data_array[30000];uint16_t data_pointer = 0;void pointer_increment(int addition){if (data_pointer + addition > 29999){data_pointer = data_pointer - 29999 + addition - 1;return;}data_pointer += addition;}void pointer_decrement(int subtraction){if (data_pointer - subtraction < 0){data_pointer = 29999 + data_pointer + 1 - subtraction;return;}data_pointer -= subtraction;}void input_byte(){unsigned int temp;char scan_type[2] = \"\";scan_type[0] = '%';scan_type[1] = 'u';scanf(scan_type, &temp);if (temp <= 255){data_array[data_pointer] = (uint8_t)temp;return;}data_array[data_pointer] = (uint8_t)(temp % 255 - 1);}";
+
+}
+
+void make_main_function(std::string* code, std::string* transpiled_code)
+{
+	*code += "int main()\n{\n";
+	*code += "for (int idx = 0; idx < 30000; idx++) {data_array[idx] = 0;}\n";
+	*code += *transpiled_code;
+	*code += "}";
+}
+
+std::string make_c_file(std::string transpiled_code)
 {
 	std::string final_code;
-
-	final_code += "#include <stdio.h>\n#include <stdint.h>\n";
-	final_code += "uint8_t data_array[30000];\nuint8_t data_pointer = 0;\n";
-	final_code += "int main()\n{\n";
-	final_code += "for (int idx = 0; idx < 30000; idx++) {data_array[idx] = 0;}\n";
-	final_code += transpiled_code;
-	final_code += "}";
+	add_boilerplate(&final_code);
+	make_main_function(&final_code, &transpiled_code);
 
 	return final_code;
 }
@@ -122,6 +137,6 @@ std::string transpile(std::vector<char> source_code, int length)
 	int starting_index = 0;
 	std::string transpiled_code = recursive_transpile(source_code, starting_index, length);
 	
-	return include_boilerplate(transpiled_code);
+	return make_c_file(transpiled_code);
 }
 

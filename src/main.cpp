@@ -8,7 +8,7 @@
 
 void help()
 {
-	std::cout << "BFC v1.1.0\nUsage: \"bfc <path to source file> <path to destination>\"\n";
+	std::cout << "BFC v1.1.1\nUsage: \"bfc <path to source file> <path to destination>\"\n";
 }
 
 int main(int argc, char** argv)

@@ -1,4 +1,4 @@
-# BFC v1.1.0
+# BFC v1.1.1
 * Brainfuck compiler
 
 ## How it works
