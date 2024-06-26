@@ -1,6 +1,4 @@
 // THIS FILE CAN BE FOUND AS A STRING IN TRANSPILER.CPP / void add_boilerplate()
-// It's just way easier to make changes like this, you do not need this file to compile
-
 #include <stdio.h>
 #include <stdint.h>
 

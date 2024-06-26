@@ -107,7 +107,7 @@ std::string recursive_transpile(std::vector<char> source_code, int pointer, int 
 
 void add_boilerplate(std::string* code)
 {
-	// This code can be found in extra/boilerplate.c
+	// This code can be found in src/boilerplate.cpp
 	// I decided to use the code this way so that setting
 	// env variables to locate the file during transpiling
 	// wouldn't be necessary for the user
