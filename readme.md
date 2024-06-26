@@ -37,3 +37,6 @@ bfc <source file path> <destination path>
 
 ## Dependencies
 * [GCC](https://gcc.gnu.org/) is required for BFC to work
+
+### Good to know
+* I can't get myself to write Brainfuck, meaning that testing is pretty limited and it could very well mean that something I say works is in fact broken
